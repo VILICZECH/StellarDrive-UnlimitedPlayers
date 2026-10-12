@@ -4,5 +4,6 @@
     "author": "VILIK",
     "version": "1.0.0",
     "description": "Raises the multiplayer player cap to 32766 remote players, the highest count the Steam and direct-IP host allow. Only the host needs the mod.",
-    "thumbnail": "thumbnail.jpg"
+    "thumbnail": "thumbnail.jpg",
+    "videos": []
 }
