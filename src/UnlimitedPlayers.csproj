@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Build: dotnet build src/UnlimitedPlayers.csproj -c Release -p:GameDir="<path to the Stellar Drive folder>"
+    The game folder must have MelonLoader installed. Add -p:CopyToMods=true to copy the DLL into the game's Mods folder.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>UnlimitedPlayers</AssemblyName>
+    <RootNamespace>UnlimitedPlayers</RootNamespace>
+    <Version>1.0.0</Version>
+    <Description>Hit the player limit? Bring your whole crew.</Description>
+    <LangVersion>latest</LangVersion>
+    <PlatformTarget>x64</PlatformTarget>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GameDir Condition="'$(GameDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\StellarDrive Demo</GameDir>
+    <Managed>$(GameDir)\StellarDrive_Data\Managed</Managed>
+    <CopyToMods Condition="'$(CopyToMods)' == ''">false</CopyToMods>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net472" Version="1.0.3">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MelonLoader"><HintPath>$(GameDir)\MelonLoader\net472\MelonLoader.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(GameDir)\MelonLoader\net472\0Harmony.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp"><HintPath>$(Managed)\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="FishNet.Runtime"><HintPath>$(Managed)\FishNet.Runtime.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <Target Name="CopyToGameMods" AfterTargets="Build" Condition="'$(CopyToMods)' == 'true'">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameDir)\Mods" />
+  </Target>
+</Project>
